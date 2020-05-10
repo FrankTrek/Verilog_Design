@@ -4,36 +4,36 @@ module cubes(
     input wire clock,  //时钟
     //当前物体信息
     input wire       id,        //0为炮弹，1为人
-    input wire[10:0] object_x,  //目前运动物体的x坐标
-    input wire[9:0]  object_y,  // y坐标
+    input wire[17:0] object_x,  //目前运动物体的x坐标
+    input wire[17:0]  object_y,  // y坐标
     output reg[3:0]  object_states_output, // 输出的状态
     output wire[49:0] cube_states_output 
 );
     localparam collide_check = 1'b0; //碰撞检测
     localparam explode_check = 1'b1; //爆炸
-    localparam half_cube_size = 8'h40; //半个方块
+    localparam half_cube_size = 16'h4000; //半个方块
     localparam init_cube_state = {50{1'b1}}; //初始化
-    localparam cube_size = 8'h80; //方块尺寸
-    localparam top_cube_height = 8'h200; //起始方块位置 纵200-600，横0-800
+    localparam cube_size = 16'h8000; //方块尺寸
+    localparam top_cube_height = 16'h20000; //起始方块位置 纵200-600，横0-800
     localparam num_cubes = 8'h50; //一共50个方块
     localparam num_vertical = 4'h10; //横向有10个方块
     localparam num_horizontal = 4'h5; //纵向有5个方块
-    localparam object_size = 8'h50; //物体尺寸 50x50
-    localparam explode_rad = 10000; //爆炸半径的平方
+    localparam object_size = 16'h5000; //物体尺寸 50x50
+    localparam explode_rad = 100000000; //爆炸半径的平方
     /*接下来为检测碰撞，
     水平方向碰撞为物体与方块中心小于等于65，
     位于方块之下被顶到判定为小于等于65，
     位于方块之上被支撑为距离小于等于65且水平方向距离小于70，
     */
-    localparam collide_dist = 8'h65;
-    localparam suppot_wide =  8'h70;
+    localparam collide_dist = 16'h6500;
+    localparam suppot_wide =  16'h7000;
     //  状态
 	 reg [3:0] object_states;  //物体状态
     reg[49:0] cube_states;   //方块状态
     reg[7:0]  current_cube_x; //目前方块的是横向第几个
     reg[7:0]  current_cube_y; //目前方块是纵向第几个
-    reg[10:0] cube_pos_x; //目前处理的方块的中心——x
-    reg[9:0]  cube_pos_y; //目前处理的方块的——y
+    reg[17:0] cube_pos_x; //目前处理的方块的中心——x
+    reg[17:0]  cube_pos_y; //目前处理的方块的——y
     reg[7:0]  current_cube_id;
     reg[3:0]  flag; //标，用于进行判断
     integer dist_x; //距离(用于算数)
