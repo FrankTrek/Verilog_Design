@@ -5,8 +5,8 @@ module player(
     input wire      rst_n,          //复位信号
     input wire      clock,          //时钟
     input wire[3:0] state,          //目前状态
-    output wire[10:0] object_x,         //输出x坐标
-    output wire[9:0] object_y,        //输出y坐标
+    output wire[17:0] object_x,         //输出x坐标
+    output wire[17:0] object_y,        //输出y坐标
     output wire     direction,      //面朝方向
     output wire[7:0] angle,          //角度
     output wire[7:0] power,           //力量
@@ -28,11 +28,11 @@ module player(
     localparam  angle_up     = 5'b00100; //向上调节角度
     localparam  angle_down   = 5'b00010; //向下调节角度
     localparam  hold_cannon  = 5'b00001; //蓄力
-    localparam  player_1_init_x = 11'b0; //玩家1初始位置
-    localparam  player_2_init_x = 11'b0; //玩家2初始位置
-    localparam  init_y = 10'b0; //初始x的位置
-    localparam  board_x = 12'h800; //游戏尺寸x
-    localparam  board_y = 12'h600; // y
+    localparam  player_1_init_x = 18'b0; //玩家1初始位置
+    localparam  player_2_init_x = 18'b0; //玩家2初始位置
+    localparam  init_y = 18'b0; //初始x的位置
+    localparam  board_x = 18'h80000; //游戏尺寸x
+    localparam  board_y = 18'h60000; // y
     localparam  health_loss = 8'h20; //每次收到攻击的血量
     localparam  drop_v = 8'h30; //坠落速度
     localparam  climb_v = 8'h20; //爬墙速度
@@ -42,8 +42,8 @@ module player(
     //阵营全局常量, 初始化之后通过top实体直接指定
     parameter Position = 1'b0; // 0或1
     //状态
-    reg [10:0] pos_x;
-    reg [9:0] pos_y;
+    reg [17:0] pos_x;
+    reg [17:0] pos_y;
     reg [8:0] v_x ; //x方向速度 第一位为左右
     reg [8:0] v_y ; //y方向速度 第一位的上下
     reg [7:0] my_health; //血量
